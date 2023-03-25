@@ -4,20 +4,20 @@ import { UserRepository } from '../../domain/user.repository';
 import UserMockModel from '../model/user-mock.model';
 
 @Injectable()
-export class MockRepository implements UserRepository {
-  findById(id: string): Promise<UserEntity | null> {
-    return UserMockModel.findById(id);
+export class MysqlRepositoryService implements UserRepository {
+  findOne(): Promise<UserEntity> {
+    throw new Error('Method not implemented.');
   }
-
-  findOne(): Promise<UserEntity | null> {
-    return UserMockModel.findOne();
+  create(user: UserEntity): Promise<UserEntity> {
+    throw new Error('Method not implemented.' + user);
   }
-
-  findAll(): Promise<UserEntity[] | null> {
+  findAll(): Promise<UserEntity[] | any> {
     return UserMockModel.findAll();
   }
-
-  create(user: UserEntity): Promise<UserEntity> {
-    return UserMockModel.create(user);
+  findById(id: string): Promise<UserEntity> {
+    return UserMockModel.findById(id);
+  }
+  update(id: string, user: UserEntity): Promise<UserEntity> {
+    return UserMockModel.update(id, user);
   }
 }
