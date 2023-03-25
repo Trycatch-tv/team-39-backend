@@ -8,5 +8,5 @@ export default class UserDto {
 
   @IsString()
   @IsNotEmpty()
-  password: string;
+  name: string;
 }
