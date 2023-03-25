@@ -35,6 +35,15 @@ export default class UserModel {
     });
   }
 
+  static update(id: string, data: UserEntity): Promise<UserEntity> {
+    return new Promise<UserEntity>((resolve) => {
+      const userUpdated: UserEntity = users.find((i) => {
+        if (i.uuid === id) return { ...i, ...data };
+      });
+      resolve(userUpdated);
+    });
+  }
+
   static destroy(id: string): Promise<UserEntity | null> {
     return new Promise<UserEntity | null>((resolve) => {
       const user = users.find((i) => i.uuid === id);
