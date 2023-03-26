@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { UserEntity } from '../../domain/user.entity';
 
 export const userData: UserEntity = {
   uuid: '1',
   name: 'Mock user',
   email: 'albertsevilla1996@gmail.com',
+  password: '$2b$10$.y6M4mtnRNe.KMmT3etkvuCnfzBQ38t5iHI.HyZg4nBwWO2j5DIvG',
 };
 let users: UserEntity[] = [userData];
 
@@ -16,14 +18,18 @@ export default class UserMockModel {
     });
   }
 
-  static findOne(): Promise<UserEntity> {
+  static findOne(email: string): Promise<UserEntity> {
     return new Promise<UserEntity>((resolve) => {
-      resolve(users[0]);
+      resolve(users.find((i) => i.email === email));
     });
   }
 
-  static findAll(): Promise<UserEntity[]> {
+  static findAll(): Promise<UserEntity[] | any> {
     return new Promise<UserEntity[]>((resolve) => {
+      // const result: UserEntity[] = users.map((i) => {
+      //   const { password, ...user } = i;
+      //   return user;
+      // });
       resolve(users);
     });
   }

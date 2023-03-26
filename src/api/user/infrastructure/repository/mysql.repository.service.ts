@@ -5,11 +5,11 @@ import UserModel from '../model/user.model';
 
 @Injectable()
 export class MysqlRepositoryService implements UserRepository {
-  findOne(): Promise<UserEntity> {
-    return UserModel.findOne();
+  findOne(email: string): Promise<UserEntity> {
+    return UserModel.findOne(email);
   }
   create(user: UserEntity): Promise<UserEntity> {
-    throw new Error('Method not implemented.' + user);
+    return UserModel.create(user);
   }
   findAll(): Promise<UserEntity[] | any> {
     return UserModel.findAll();
