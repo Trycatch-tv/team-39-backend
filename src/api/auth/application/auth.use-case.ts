@@ -1,5 +1,5 @@
-import { UserEntity } from '../../../../src/api/user/domain/user.entity';
-import UserValue from '../../../../src/api/user/domain/user.value';
+import { UserEntity } from '../../user/domain/user.entity';
+import UserValue from '../../user/domain/user.value';
 import { IAuthUseCase } from '../domain/auth.use-case';
 import { AuthRepositoryService } from '../infrastructure/repository/auth.repository.service';
 
