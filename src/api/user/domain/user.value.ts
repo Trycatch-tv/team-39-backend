@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from './user.entity';
-import { Role } from 'src/shared/enums/role.enum';
+import { Role } from '../../../../src/shared/enums/role.enum';
 
 export default class UserValue implements UserEntity {
   uuid: string;

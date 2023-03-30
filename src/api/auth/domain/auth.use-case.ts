@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/api/user/domain/user.entity';
+import { UserEntity } from '../../../../src/api/user/domain/user.entity';
 import { LoginEntity } from './login.entity';
 
 export interface IAuthUseCase {

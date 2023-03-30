@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../../../user/domain/user.entity';
 import { MysqlRepositoryService } from './../../../../../src/api/user/infrastructure/repository/mysql.repository.service';
-import { Role } from 'src/shared/enums/role.enum';
+import { Role } from '../../../../../src/shared/enums/role.enum';
 
 @Injectable()
 export class AuthRepositoryService {

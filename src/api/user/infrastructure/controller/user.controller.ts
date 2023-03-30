@@ -11,8 +11,6 @@ import { MysqlRepositoryService } from '../repository/mysql.repository.service';
 import { UserUseCase } from '../../application/user.use-case';
 import UserDto from '../../application/user.dto';
 import { IUserUseCase } from '../../domain/user.use-case';
-import { Auth } from 'src/shared/decorators/auth.decorator';
-import { Role } from 'src/shared/enums/role.enum';
 
 @UseInterceptors(FormatResponseInterceptor)
 @Controller('api/v1/user')
@@ -23,7 +21,7 @@ export class UserController {
   }
 
   @Get()
-  @Auth(Role.User)
+  // @Auth(Role.User)
   getUsers() {
     return this.useCase.findUsers();
   }

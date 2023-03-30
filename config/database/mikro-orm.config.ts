@@ -1,6 +1,6 @@
 import { MikroOrmModuleAsyncOptions } from '@mikro-orm/nestjs';
 import { ConfigService } from '@nestjs/config';
-import { UserModel } from 'src/api/user/infrastructure/model/user.model';
+import { UserModel } from '../../src/api/user/infrastructure/model/user.model';
 
 // const configService = new ConfigService();
 export default async function (

@@ -1,5 +1,5 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
-import { Role } from 'src/shared/enums/role.enum';
+import { Role } from '../../../../../src/shared/enums/role.enum';
 import { UserEntity } from '../../domain/user.entity';
 
 @Entity({ tableName: 'user' })
