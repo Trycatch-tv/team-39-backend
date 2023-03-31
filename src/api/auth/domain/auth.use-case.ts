@@ -3,5 +3,5 @@ import { LoginEntity } from './login.entity';
 
 export interface IAuthUseCase {
   loginWithEmail(crendetials: LoginEntity): Promise<{ access_token: string }>;
-  registerWithEmail(user: UserEntity): Promise<UserEntity>;
+  registerWithEmail(user: UserEntity): Promise<{ access_token: string }>;
 }

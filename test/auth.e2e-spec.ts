@@ -6,12 +6,14 @@ import { UserEntity } from '../src/api/user/domain/user.entity';
 import { AuthRepositoryService } from '../src/api/auth/infrastructure/repository/auth.repository.service';
 import { MysqlRepositoryService } from '../src/api/user/infrastructure/repository/mysql.repository.service';
 import { AuthController } from '../src/api/auth/infrastructure/controller/auth.controller';
-import { Validator } from 'class-validator';
+import { JwtModule } from '@nestjs/jwt';
+import { LocalStrategy } from '../src/api/auth/infrastructure/strategy/local.strategy';
 
 const userData: UserEntity[] = [
   {
     uuid: '1',
-    name: 'Mock user',
+    first_name: 'firstname',
+    last_name: 'lastname',
     email: 'albertsevilla1996@gmail.com',
     password: 'password',
   },
@@ -21,10 +23,17 @@ describe('AuthController', () => {
   let app: INestApplication;
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
+      imports: [
+        JwtModule.register({
+          secret: 'secret',
+          signOptions: { expiresIn: '3600s' },
+        }),
+      ],
       controllers: [AuthController],
       providers: [
         AuthRepositoryService,
         { provide: MysqlRepositoryService, useClass: MockRepository },
+        LocalStrategy,
       ],
     }).compile();
     app = moduleRef.createNestApplication();
@@ -35,19 +44,11 @@ describe('AuthController', () => {
     app.close();
   });
   it('/ POST Login', async () => {
-    const expectedRes = {
-      statusCode: 200,
-      data: {
-        uuid: userData[0].uuid,
-        name: userData[0].name,
-        email: userData[0].email,
-      },
-    };
     const res = await request(app.getHttpServer())
       .post('/api/v1/auth/login')
       .send(userData[0])
       .expect(200);
-    expect(res.body).toEqual(expectedRes);
+    expect(res.body.data).toHaveProperty('access_token');
   });
 
   it('/ POST register an user with invalid email', async () => {
@@ -77,7 +78,8 @@ describe('AuthController', () => {
 
   it('/ POST register a valid user', async () => {
     const newUser = {
-      name: 'Cristian Gonzalez',
+      first_name: 'Cristian',
+      last_name: 'Gonzalez',
       email: 'test2@gmail.com',
       password: '1234',
     };

@@ -25,7 +25,10 @@ export class AuthRepositoryService {
     if (existUser) throw new BadRequestException('user already exist');
     if (!Object.values(Role).some((role) => user?.roles?.includes(role)))
       throw new BadRequestException('role not exist');
-    return this.userRepository.create(user);
+    const payload = { ...(await this.userRepository.create(user)) };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
   async login(user: UserEntity): Promise<{ access_token: string }> {
     const payload = { ...user };

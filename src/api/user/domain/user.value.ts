@@ -6,7 +6,9 @@ import { Role } from '../../../../src/shared/enums/role.enum';
 export default class UserValue implements UserEntity {
   uuid: string;
 
-  name: string;
+  first_name: string;
+
+  last_name: string;
 
   email: string;
 
@@ -16,7 +18,8 @@ export default class UserValue implements UserEntity {
 
   constructor(user: UserEntity) {
     this.uuid = nanoid();
-    this.name = user.name;
+    this.first_name = user.first_name;
+    this.last_name = user.last_name;
     this.email = user.email;
     this.password = this.hashPassword(user.password);
     this.roles = !user.roles ? [Role.User] : user.roles;

@@ -11,7 +11,7 @@ async function bootstrap() {
   const whitelist = configService.get('server.allowed_sources');
   app.use(helmet());
   app.enableCors(corsOptions(whitelist));
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   await app.listen(configService.get('server.port'));
 }
 bootstrap();

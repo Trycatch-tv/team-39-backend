@@ -11,7 +11,10 @@ export class UserModel {
   uuid: string;
 
   @Property()
-  name: string;
+  first_name: string;
+
+  @Property()
+  last_name: string;
 
   @Property({ unique: true })
   email: string;
@@ -24,7 +27,8 @@ export class UserModel {
 
   constructor(user: UserEntity) {
     this.email = user.email;
-    this.name = user.name;
+    this.first_name = user.first_name;
+    this.last_name = user.last_name;
     this.uuid = user.uuid;
     this.password = user.password;
     this.roles = user.roles;

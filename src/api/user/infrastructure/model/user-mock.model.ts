@@ -3,7 +3,8 @@ import { UserEntity } from '../../domain/user.entity';
 
 export const userData: UserEntity = {
   uuid: '1',
-  name: 'Mock user',
+  first_name: 'firstname',
+  last_name: 'lastname',
   email: 'albertsevilla1996@gmail.com',
   password: '$2b$10$.y6M4mtnRNe.KMmT3etkvuCnfzBQ38t5iHI.HyZg4nBwWO2j5DIvG',
 };
