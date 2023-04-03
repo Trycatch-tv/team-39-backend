@@ -20,4 +20,7 @@ export class MockRepository implements UserRepository {
   update(id: string, user: UserEntity): Promise<UserEntity> {
     return UserMockModel.update(id, user);
   }
+  setConfirmed(id: string, confirmed: boolean): void {
+    return UserMockModel.setConfirmed(id, confirmed);
+  }
 }

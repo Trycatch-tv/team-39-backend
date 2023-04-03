@@ -16,6 +16,10 @@ export default class UserValue implements UserEntity {
 
   roles: Role[];
 
+  is_confirmed: boolean;
+
+  active: boolean;
+
   constructor(user: UserEntity) {
     this.uuid = nanoid();
     this.first_name = user.first_name;
@@ -23,6 +27,8 @@ export default class UserValue implements UserEntity {
     this.email = user.email;
     this.password = this.hashPassword(user.password);
     this.roles = !user.roles ? [Role.User] : user.roles;
+    this.is_confirmed = false;
+    this.active = true;
   }
   hashPassword(password) {
     const saltOrRounds = 10;

@@ -6,4 +6,5 @@ export interface UserRepository {
   create(user: UserEntity): Promise<UserEntity | null>;
   findAll(): Promise<UserEntity[] | null>;
   update(id: string, user: UserEntity): Promise<UserEntity | null>;
+  setConfirmed(id: string, confirmed: boolean): void;
 }

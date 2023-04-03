@@ -49,6 +49,14 @@ export default class UserMockModel {
       resolve(userUpdated);
     });
   }
+  static setConfirmed(id: string, confirmed: boolean) {
+    users = users.map((i) => {
+      if (i.uuid === id) {
+        i.is_confirmed = true;
+      }
+      return i;
+    });
+  }
   static destroy(id: string): Promise<UserEntity | null> {
     return new Promise<UserEntity | null>((resolve) => {
       const user = users.find((i) => i.uuid === id);

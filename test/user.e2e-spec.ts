@@ -9,7 +9,8 @@ import { UserEntity } from '../src/api/user/domain/user.entity';
 const userData: UserEntity[] = [
   {
     uuid: '1',
-    name: 'Mock user',
+    first_name: 'Mock name',
+    last_name: 'mock pellido',
     email: 'albertsevilla1996@gmail.com',
     password: '$2b$10$.y6M4mtnRNe.KMmT3etkvuCnfzBQ38t5iHI.HyZg4nBwWO2j5DIvG',
   },

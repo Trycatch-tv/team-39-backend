@@ -38,4 +38,7 @@ export class MysqlRepositoryService implements UserRepository {
     this.userModel.nativeUpdate({ uuid: id }, res);
     return user;
   }
+  setConfirmed(id: string, confirmed: boolean): void {
+    this.userModel.nativeUpdate({ uuid: id }, { is_confirmed: confirmed });
+  }
 }

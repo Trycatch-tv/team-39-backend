@@ -11,4 +11,7 @@ export class AuthUseCase implements IAuthUseCase {
   registerWithEmail(user: UserEntity): Promise<{ access_token: string }> {
     return this.authRepository.registerUser(new UserValue(user));
   }
+  confirmToken(token: string): any {
+    return this.authRepository.decodeToken(token);
+  }
 }

@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { MailService } from '../mail/service/mail.service';
 import { UserModel } from '../user/infrastructure/model/user.model';
 import { MysqlRepositoryService } from '../user/infrastructure/repository/mysql.repository.service';
 import { AuthController } from './infrastructure/controller/auth.controller';
@@ -16,7 +17,7 @@ import { LocalStrategy } from './infrastructure/strategy/local.strategy';
     JwtModule.registerAsync({
       useFactory(configService: ConfigService) {
         return {
-          secret: configService.get('JWT_SECRET'),
+          secret: configService.get('JWT_SECRET') || 'secret',
           signOptions: { expiresIn: '3600s' },
         };
       },
@@ -30,6 +31,7 @@ import { LocalStrategy } from './infrastructure/strategy/local.strategy';
     LocalStrategy,
     JwtStrategy,
     MysqlRepositoryService,
+    MailService,
   ],
 })
 export class AuthModule {}
