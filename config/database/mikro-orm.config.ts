@@ -7,7 +7,7 @@ export default async function (
   configService: ConfigService,
 ): Promise<MikroOrmModuleAsyncOptions | any> {
   return {
-    dbName: 'role_app',
+    dbName: 'movie_app',
     type: 'mysql',
     port: 3306,
     host: 'localhost',
