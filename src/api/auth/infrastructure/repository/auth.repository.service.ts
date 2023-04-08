@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../../../user/domain/user.entity';
@@ -26,40 +30,44 @@ export class AuthRepositoryService {
     throw new BadRequestException('user or password incorrect');
   }
   async registerUser(user: UserEntity) {
-    const existUser = await this.userRepository.findOne(user.email);
-    if (existUser) throw new BadRequestException('user already exist');
-    if (!Object.values(Role).some((role) => user?.roles?.includes(role)))
-      throw new BadRequestException('role not exist');
-    const createdUser = await this.userRepository.create(user);
-    const payload = { ...createdUser };
-    const mailData: MailDto = {
-      to: createdUser.email,
-      from: 'noreply@crisego.com',
-      subject: `Welcome ${createdUser.first_name} ${createdUser.last_name}`,
-      template: 'welcome',
-      data: {
-        first_name: createdUser.first_name,
-        last_name: createdUser.last_name,
-      },
-    };
-    this._mailService.send(mailData);
-    const confirmToken = this.jwtService.sign(payload, {
-      expiresIn: '24h',
-    });
-    const confirmEmailData = {
-      ...mailData,
-      subject: 'Confirm your account',
-      template: 'confirm-account',
-      data: {
-        url: `${this._configService.get(
-          'server.url',
-        )}/api/v1/auth/confirm-account?token=${confirmToken}`,
-      },
-    };
-    this._mailService.send(confirmEmailData);
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    try {
+      const existUser = await this.userRepository.findOne(user.email);
+      if (existUser) throw new BadRequestException('user already exist');
+      if (!Object.values(Role).some((role) => user?.roles?.includes(role)))
+        throw new BadRequestException('role not exist');
+      const createdUser = await this.userRepository.create(user);
+      const payload = { ...createdUser };
+      const mailData: MailDto = {
+        to: createdUser.email,
+        from: 'noreply@crisego.com',
+        subject: `Welcome ${createdUser.first_name} ${createdUser.last_name}`,
+        template: 'welcome',
+        data: {
+          first_name: createdUser.first_name,
+          last_name: createdUser.last_name,
+        },
+      };
+      this._mailService.send(mailData);
+      const confirmToken = this.jwtService.sign(payload, {
+        expiresIn: '24h',
+      });
+      const confirmEmailData = {
+        ...mailData,
+        subject: 'Confirm your account',
+        template: 'confirm-account',
+        data: {
+          url: `${this._configService.get(
+            'server.url',
+          )}/api/v1/auth/confirm-account?token=${confirmToken}`,
+        },
+      };
+      this._mailService.send(confirmEmailData);
+      return {
+        access_token: this.jwtService.sign(payload),
+      };
+    } catch (error) {
+      throw new InternalServerErrorException('Error performing operation');
+    }
   }
   async login(user: UserEntity): Promise<{ access_token: string }> {
     const payload = { ...user };

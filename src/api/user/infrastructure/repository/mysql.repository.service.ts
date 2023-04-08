@@ -1,6 +1,10 @@
 import { EntityManager, EntityRepository } from '@mikro-orm/mysql';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { UserEntity } from '../../domain/user.entity';
 import { UserRepository } from '../../domain/user.repository';
 import { UserModel } from '../model/user.model';
@@ -16,9 +20,13 @@ export class MysqlRepositoryService implements UserRepository {
     return this.userModel.findOne({ email });
   }
   async create(user: UserEntity): Promise<UserEntity> {
-    const userCreated = new UserModel(user);
-    this.userModel.persistAndFlush(userCreated);
-    return userCreated;
+    try {
+      const userCreated = new UserModel(user);
+      await this.userModel.persistAndFlush(userCreated);
+      return userCreated;
+    } catch (error) {
+      throw new InternalServerErrorException('Error performing operations');
+    }
   }
   findAll(): Promise<UserEntity[] | any> {
     return this.userModel.findAll();
