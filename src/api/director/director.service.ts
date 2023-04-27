@@ -1,26 +1,53 @@
+import { EntityRepository } from '@mikro-orm/mysql';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { CreateDirectorDto } from './dto/create-director.dto';
 import { UpdateDirectorDto } from './dto/update-director.dto';
+import { Director } from './entities/director.entity';
 
 @Injectable()
 export class DirectorService {
-  create(createDirectorDto: CreateDirectorDto) {
-    return 'This action adds a new director';
+  constructor(
+    @InjectRepository(Director)
+    private _directorModel: EntityRepository<Director>,
+  ) {}
+  async create(createDirectorDto: CreateDirectorDto) {
+    try {
+      return await this._directorModel.persistAndFlush(createDirectorDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all director`;
+  async findAll() {
+    try {
+      return await this._directorModel.findAll();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} director`;
+  async findOne(id: number) {
+    try {
+      return await this._directorModel.findOne({ id });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  update(id: number, updateDirectorDto: UpdateDirectorDto) {
-    return `This action updates a #${id} director`;
+  async update(id: number, updateDirectorDto: UpdateDirectorDto) {
+    try {
+      return await this._directorModel.nativeUpdate({ id }, updateDirectorDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} director`;
+  async remove(id: number) {
+    try {
+      return await this._directorModel.nativeDelete({ id });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

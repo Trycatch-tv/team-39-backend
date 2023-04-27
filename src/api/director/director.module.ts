@@ -4,6 +4,6 @@ import { DirectorController } from './director.controller';
 
 @Module({
   controllers: [DirectorController],
-  providers: [DirectorService]
+  providers: [DirectorService],
 })
 export class DirectorModule {}

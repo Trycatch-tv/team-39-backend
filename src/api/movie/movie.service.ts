@@ -1,26 +1,53 @@
+import { EntityRepository } from '@mikro-orm/mysql';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { Movie } from './entities/movie.entity';
 
 @Injectable()
 export class MovieService {
-  create(createMovieDto: CreateMovieDto) {
-    return 'This action adds a new movie';
+  constructor(
+    @InjectRepository(Movie)
+    private _movieModel: EntityRepository<Movie>,
+  ) {}
+  async create(createMovieDto: CreateMovieDto) {
+    try {
+      return await this._movieModel.persistAndFlush(createMovieDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all movie`;
+  async findAll() {
+    try {
+      return await this._movieModel.findAll();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} movie`;
+  async findOne(id: number) {
+    try {
+      return await this._movieModel.findOne({ id });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  update(id: number, updateMovieDto: UpdateMovieDto) {
-    return `This action updates a #${id} movie`;
+  async update(id: number, updateMovieDto: UpdateMovieDto) {
+    try {
+      return await this._movieModel.nativeUpdate({ id }, updateMovieDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} movie`;
+  async remove(id: number) {
+    try {
+      return await this._movieModel.nativeDelete({ id });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

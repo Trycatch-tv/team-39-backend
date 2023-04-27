@@ -1,26 +1,53 @@
+import { EntityRepository } from '@mikro-orm/mysql';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
+import { Genre } from './entities/genre.entity';
 
 @Injectable()
 export class GenreService {
-  create(createGenreDto: CreateGenreDto) {
-    return 'This action adds a new genre';
+  constructor(
+    @InjectRepository(Genre)
+    private _genreModel: EntityRepository<Genre>,
+  ) {}
+  async create(createGenreDto: CreateGenreDto) {
+    try {
+      return await this._genreModel.persistAndFlush(createGenreDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all genre`;
+  async findAll() {
+    try {
+      return await this._genreModel.findAll();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} genre`;
+  async findOne(id: number) {
+    try {
+      return await this._genreModel.findOne({ id });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  update(id: number, updateGenreDto: UpdateGenreDto) {
-    return `This action updates a #${id} genre`;
+  async update(id: number, updateGenreDto: UpdateGenreDto) {
+    try {
+      return await this._genreModel.nativeUpdate({ id }, updateGenreDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} genre`;
+  async remove(id: number) {
+    try {
+      return await this._genreModel.nativeDelete({ id });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
