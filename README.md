@@ -48,13 +48,11 @@ _For the project to work, the following dependencies must be installed:_
   
 
 To install the project correctly the following steps must be performed:_.
-- First the `database [1]` must be imported, the database script is located in the main directory inside the `database/script.sql` folder.
+- First the `database [3]` must be imported, the database script is defined below, see step [3].
 - Then you have to configure the environment variables, the environment variables used are located in `config/env/template.env`. 
 - Finally, go into the root folder of the project and run the `npm install` command to install all the dependencies.
 
 
-
-> 1] The database script is located in the root directory of the project inside the Database folder `{root}/database`.
 
 
   
@@ -65,13 +63,15 @@ Example of installing the dependencies and launching the application
 ```
 
 
-cd project/
+[1] cd project/
 
-npm install
+[2] npm install
 
-cd src/
+[3] npm run mikro-orm schema:fresh -- --run //to create db and tables
 
-npm run start [1]
+[4] cd src/
+
+[5] npm run start
 
 
 ```
