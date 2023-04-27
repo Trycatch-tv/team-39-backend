@@ -7,6 +7,10 @@ import { UserModule } from './api/user/user.module';
 import { AuthModule } from './api/auth/auth.module';
 import { DatabaseModule } from '../config/database/database.module';
 import { MailModule } from './api/mail/mail.module';
+import { MovieModule } from './api/movie/movie.module';
+import { DirectorModule } from './api/director/director.module';
+import { ReviewModule } from './api/review/review.module';
+import { GenreModule } from './api/genre/genre.module';
 
 @Module({
   imports: [
@@ -19,6 +23,10 @@ import { MailModule } from './api/mail/mail.module';
     AuthModule,
     DatabaseModule,
     MailModule,
+    MovieModule,
+    DirectorModule,
+    ReviewModule,
+    GenreModule,
   ],
   controllers: [AppController],
   providers: [AppService],

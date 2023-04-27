@@ -1,6 +1,10 @@
 import { MikroOrmModuleAsyncOptions } from '@mikro-orm/nestjs';
 import { ConfigService } from '@nestjs/config';
-import { UserModel } from '../../src/api/user/infrastructure/model/user.model';
+import { Director } from './src/api/director/entities/director.entity';
+import { Genre } from './src/api/genre/entities/genre.entity';
+import { Movie } from './src/api/movie/entities/movie.entity';
+import { Review } from './src/api/review/entities/review.entity';
+import { UserModel } from './src/api/user/infrastructure/model/user.model';
 
 // const configService = new ConfigService();
 export default async function (
@@ -13,7 +17,7 @@ export default async function (
     host: 'localhost',
     user: 'root',
     password: 'admin',
-    entities: [UserModel],
+    entities: [UserModel, Director, Genre, Movie, Review],
     autoLoadEntities: true,
     schemaGenerator: {
       disableForeignKeys: true, // wrap statements with `set foreign_key_checks = 0` or equivalent
