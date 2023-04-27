@@ -20,7 +20,7 @@ export default () => ({
     allowed_sources: process.env.ALLOWED_SOURCES?.split(','),
   },
   database: {
-    name: process.env.DB_NAME || 'role_app',
+    name: process.env.DB_NAME || 'movie_app',
     host: process.env.DB_HOST || 'localhost',
     port: parseInt(process.env.DB_PORT, 10) || 3306,
     username: process.env.DB_USER || 'root',

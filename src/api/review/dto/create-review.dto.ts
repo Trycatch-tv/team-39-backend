@@ -7,9 +7,9 @@ export class CreateReviewDto {
 
   @IsNotEmpty()
   @IsArray()
-  movie: number[];
+  movie: any;
 
   @IsNotEmpty()
   @IsArray()
-  user: number[];
+  user: any;
 }

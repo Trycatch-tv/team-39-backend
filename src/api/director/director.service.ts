@@ -1,4 +1,4 @@
-import { EntityRepository } from '@mikro-orm/mysql';
+import { EntityManager, EntityRepository } from '@mikro-orm/mysql';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { CreateDirectorDto } from './dto/create-director.dto';
@@ -10,10 +10,12 @@ export class DirectorService {
   constructor(
     @InjectRepository(Director)
     private _directorModel: EntityRepository<Director>,
+    private _em: EntityManager,
   ) {}
   async create(createDirectorDto: CreateDirectorDto) {
     try {
-      return await this._directorModel.persistAndFlush(createDirectorDto);
+      const director = this._em.create(Director, createDirectorDto);
+      return await this._directorModel.persistAndFlush(director);
     } catch (error) {
       console.log(error);
     }

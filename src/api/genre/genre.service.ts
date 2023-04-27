@@ -1,4 +1,4 @@
-import { EntityRepository } from '@mikro-orm/mysql';
+import { EntityManager, EntityRepository } from '@mikro-orm/mysql';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { CreateGenreDto } from './dto/create-genre.dto';
@@ -10,10 +10,12 @@ export class GenreService {
   constructor(
     @InjectRepository(Genre)
     private _genreModel: EntityRepository<Genre>,
+    private _em: EntityManager,
   ) {}
   async create(createGenreDto: CreateGenreDto) {
     try {
-      return await this._genreModel.persistAndFlush(createGenreDto);
+      const genre = this._em.create(Genre, createGenreDto);
+      return await this._genreModel.persistAndFlush(genre);
     } catch (error) {
       console.log(error);
     }
