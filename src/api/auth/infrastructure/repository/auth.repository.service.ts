@@ -37,31 +37,31 @@ export class AuthRepositoryService {
         throw new BadRequestException('role not exist');
       const createdUser = await this.userRepository.create(user);
       const payload = { ...createdUser };
-      const mailData: MailDto = {
-        to: createdUser.email,
-        from: 'noreply@crisego.com',
-        subject: `Welcome ${createdUser.first_name} ${createdUser.last_name}`,
-        template: 'welcome',
-        data: {
-          first_name: createdUser.first_name,
-          last_name: createdUser.last_name,
-        },
-      };
-      this._mailService.send(mailData);
-      const confirmToken = this.jwtService.sign(payload, {
-        expiresIn: '24h',
-      });
-      const confirmEmailData = {
-        ...mailData,
-        subject: 'Confirm your account',
-        template: 'confirm-account',
-        data: {
-          url: `${this._configService.get(
-            'server.url',
-          )}/api/v1/auth/confirm-account?token=${confirmToken}`,
-        },
-      };
-      this._mailService.send(confirmEmailData);
+      // const mailData: MailDto = {
+      //   to: createdUser.email,
+      //   from: 'noreply@crisego.com',
+      //   subject: `Welcome ${createdUser.first_name} ${createdUser.last_name}`,
+      //   template: 'welcome',
+      //   data: {
+      //     first_name: createdUser.first_name,
+      //     last_name: createdUser.last_name,
+      //   },
+      // };
+      // this._mailService.send(mailData);
+      // const confirmToken = this.jwtService.sign(payload, {
+      //   expiresIn: '24h',
+      // });
+      // const confirmEmailData = {
+      //   ...mailData,
+      //   subject: 'Confirm your account',
+      //   template: 'confirm-account',
+      //   data: {
+      //     url: `${this._configService.get(
+      //       'server.url',
+      //     )}/api/v1/auth/confirm-account?token=${confirmToken}`,
+      //   },
+      // };
+      // this._mailService.send(confirmEmailData);
       return {
         access_token: this.jwtService.sign(payload),
       };
