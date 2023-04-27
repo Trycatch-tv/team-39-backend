@@ -69,9 +69,7 @@ Example of installing the dependencies and launching the application
 
 [3] npm run mikro-orm schema:fresh -- --run //to create db and tables
 
-[4] cd src/
-
-[5] npm run start
+[4] npm run start
 
 
 ```
